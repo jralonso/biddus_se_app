@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.occulus.vendedoresapp.Pedidos" >
+ <item
+        android:id="@+id/miPerfil"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Mi Perfil"/>
+    <item
+        android:id="@+id/misOfertas"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Mis Ofertas"/>
+      <item
+        android:id="@+id/salir"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="Salir"/>
+
+</menu>

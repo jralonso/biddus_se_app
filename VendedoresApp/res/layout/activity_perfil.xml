@@ -1,0 +1,134 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fb="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.occulus.vendedoresapp.Perfil"
+        tools:ignore="MergeRootFrame" >
+
+        <TextView
+            android:id="@+id/tituloPerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="Mi Perfil"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textoNom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/nombreBid"
+            android:layout_alignLeft="@+id/tituloPerfil"
+            android:layout_marginLeft="28dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/nombreBid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tituloPerfil"
+            android:layout_marginTop="40dp"
+            android:layout_toLeftOf="@+id/textoNom"
+            android:text="Nombre Usuario:" />
+
+        <TextView
+            android:id="@+id/cif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/nombreBid"
+            android:layout_below="@+id/nombreBid"
+            android:layout_marginTop="30dp"
+            android:text="CIF/NIF: " />
+
+        <TextView
+            android:id="@+id/textoCif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/cif"
+            android:layout_alignBottom="@+id/cif"
+            android:layout_alignLeft="@+id/textoNom"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/cif"
+            android:layout_below="@+id/textoCif"
+            android:layout_marginTop="30dp"
+            android:text="Email" />
+
+        <TextView
+            android:id="@+id/textoMail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textoCif"
+            android:layout_alignTop="@+id/email"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/textoNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textoMail"
+            android:layout_alignTop="@+id/nombre"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/apellidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/nombre"
+            android:layout_below="@+id/textoNombre"
+            android:layout_marginTop="30dp"
+            android:text="Apellidos" />
+
+        <TextView
+            android:id="@+id/textoApellidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/apellidos"
+            android:layout_alignRight="@+id/textoNombre"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/nombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/email"
+            android:layout_marginTop="30dp"
+            android:layout_toLeftOf="@+id/textoNom"
+            android:text="Nombre" />
+
+        <TextView
+            android:id="@+id/listaCat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/nombre"
+            android:layout_below="@+id/textoApellidos"
+            android:layout_marginTop="30dp"
+            android:text="Categorias" />
+
+        <TextView
+            android:id="@+id/textoCat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textoApellidos"
+            android:layout_alignTop="@+id/listaCat"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+
+</ScrollView>

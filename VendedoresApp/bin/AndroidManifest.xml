@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.occulus.vendedoresapp"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="14" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.occulus.vendedoresapp.Login"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.occulus.vendedoresapp.ListaPedidos"
+            android:label="@string/title_activity_pedidos" >
+        </activity>
+        <activity
+            android:name="com.occulus.vendedoresapp.Activity1"
+            android:label="@string/title_activity_1" >
+        </activity>
+        <activity
+            android:name="com.occulus.vendedoresapp.Registro"
+            android:label="@string/title_activity_registro" >
+        </activity>
+        <activity
+            android:name="com.occulus.vendedoresapp.Oferta"
+            android:label="@string/title_activity_oferta" >
+        </activity>
+        <activity
+            android:name="com.occulus.vendedoresapp.Perfil"
+            android:label="@string/title_activity_perfil" >
+        </activity>
+        <activity
+            android:name="com.occulus.vendedoresapp.ListaOfertas"
+            android:label="@string/title_activity_lista_ofertas" >
+        </activity>
+    </application>
+
+</manifest>

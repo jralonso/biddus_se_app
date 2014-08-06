@@ -1,0 +1,85 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fb="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.occulus.rest.Login$PlaceholderFragment" >
+
+        <TextView
+            android:id="@+id/tituloLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="@string/login"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="sans" />
+
+        <TextView
+            android:id="@+id/textoUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tituloLogin"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/email" />
+
+        <EditText
+            android:id="@+id/user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tituloLogin"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="25dp"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/textoPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textoUsuario"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/contrasenna" />
+
+        <EditText
+            android:id="@+id/pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textoUsuario"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="25dp"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/registro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pass"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/registrarse"
+            android:textColor="#0000cd" />
+
+        <Button
+            android:id="@+id/boton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registro"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="@string/enviar" />
+
+
+    </RelativeLayout>
+
+</ScrollView>

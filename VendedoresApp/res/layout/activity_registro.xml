@@ -1,0 +1,160 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fb="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.occulus.rest.Registro$PlaceholderFragment" >
+
+        <TextView
+            android:id="@+id/tituloRegistro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/registro"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textoRazonSocial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tituloRegistro"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/razonSocial" />
+
+        <EditText
+            android:id="@+id/razonSocial"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tituloRegistro"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="15dp"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textoNifCif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textoRazonSocial"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/NIFCIF" />
+
+        <EditText
+            android:id="@+id/nifCif"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/razonSocial"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="15dp"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textoEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textoNifCif"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/email" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nifCif"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="10dp"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/textoNombreUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textoEmail"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/userBiddus" />
+
+        <EditText
+            android:id="@+id/nombreUser"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/email"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="10dp"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textoPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textoNombreUser"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/contrasenna" />
+
+        <EditText
+            android:id="@+id/pass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nombreUser"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="20dp"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/textoConfirmPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textoPass"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/confirmarContrasenna" />
+
+        <EditText
+            android:id="@+id/confirmPass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pass"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="20dp"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/textoCategoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textoConfirmPass"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/categoria" />
+
+        <com.occulus.vendedoresapp.MultiSelectionSpinner
+            android:id="@+id/mySpinner1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textoConfirmPass"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/boton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textoCategoria"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="@string/enviar" />
+    </RelativeLayout>
+
+</ScrollView>

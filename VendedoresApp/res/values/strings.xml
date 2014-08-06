@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">VendedoresApp</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_pedidos">VendedoresApp</string>
+    <string name="pedidos">Pedidos</string>
+    <string name="title_activity_1">Detalles</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="contrasenna">Contraseña</string>
+    <string name="enviar">Enviar</string>
+    <string name="registrarse"><u>Registrarse</u></string>
+    <string name="title_activity_registro">Registro</string>
+    <string name="registro">Registro</string>
+    <string name="nombre">Nombre</string>
+    <string name="confirmarContrasenna">Confirmar\ncontraseña</string>
+    <string name="userBiddus">Nombre usuario\npara biddus</string>
+    <string name="razonSocial">Razón social</string>
+    <string name="NIFCIF">NIF / CIF</string>
+    <string name="categoria">Categoría</string>
+    <string name="title_activity_oferta">Oferta</string>
+
+    <string-array name="envio">
+        <item>2 – 3 días</item>
+        <item>4 – 7 días</item>
+        <item>7 – 10 días</item>
+        <item>2 – 3 semanas</item>
+    </string-array>
+
+    <string name="title_activity_perfil">Perfil</string>
+    <string name="title_activity_lista_ofertas">ListaOfertas</string>
+
+</resources>
