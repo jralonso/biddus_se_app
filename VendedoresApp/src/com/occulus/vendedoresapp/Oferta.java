@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 public class Oferta extends Activity {
 	private int id;
+	private String offerId;
 	private String login;
 	private String user_id;
 	private ImageButton ib;
@@ -175,6 +176,9 @@ public class Oferta extends Activity {
 										ListaPedidos.class);
 								intent.putExtra("user_id", user_id);
 								intent.putExtra("login", login);
+//								intent.putExtra("offerId", offerId);
+//								Log.v("ID envioooooooooooooo", offerId);
+
 								startActivity(intent);
 
 								finish();
@@ -308,6 +312,21 @@ public class Oferta extends Activity {
 
 				Log.v("BIEN", respStr);
 
+//				JSONObject object = new JSONObject(respStr);
+//				
+//				JSONObject auxObject = object.getJSONObject("data");
+//				// Log.v("JSON2", auxObject.toString());
+//
+//				JSONObject respJSON = auxObject.getJSONObject("bid");
+//				
+//				 offerId = respJSON.getString("id");
+//
+//				
+//				Log.v("IDIDDIDIDID", offerId);
+
+
+
+			
 				// JSONObject object = new JSONObject(respStr);
 				// JSONObject object2 = object.getJSONObject("data");
 				// JSONObject object3 = object2.getJSONObject("bids");
@@ -332,12 +351,12 @@ public class Oferta extends Activity {
 
 		protected void onPostExecute(Boolean result) {
 
-			// if(result){
-			// Toast t = Toast.makeText(Oferta.this,
-			// "Oferta realizada correctamente",
-			// Toast.LENGTH_SHORT);
-			// t.show();
-			// }
+//			 if(result){
+//			 Toast t = Toast.makeText(Oferta.this,
+//			 "Oferta realizada correctamente",
+//			 Toast.LENGTH_SHORT);
+//			 t.show();
+//			 }
 		}
 	}
 }

@@ -49,6 +49,14 @@
             android:name="com.occulus.vendedoresapp.ListaOfertas"
             android:label="@string/title_activity_lista_ofertas" >
         </activity>
+        <activity
+            android:name="com.occulus.vendedoresapp.ModificarOEliminar"
+            android:label="@string/title_activity_modificar_oferta" >
+        </activity>
+        <activity
+            android:name="com.occulus.vendedoresapp.ModificarOferta"
+            android:label="@string/title_activity_modificar_oferta" >
+        </activity>
     </application>
 
 </manifest>

@@ -32,11 +32,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ListaOfertas extends Activity {
 	private int contOff;
+	private int aux2 = 0;
 	private String idFin = "";
 	private int precioFin = 9999999;
 	private ListView lstPedidos;
@@ -46,13 +49,13 @@ public class ListaOfertas extends Activity {
 	private String user_id;
 	// private TareaWSLogOut descon;
 	private String respStr;
-	private String id;
+	private String propId;
 	private boolean repe = false;
 	// private TextView texto;
 	private ArrayList<Pedidos> arrayPed;
 	private ArrayList<String> marcas;
 	private ArrayList<String> modelos;
-	private ArrayList<String> listaTitulos;
+	private ArrayList<String> listaTitulos, listaTitulos2;
 	private ArrayList<Integer> precios;
 	private Pedidos pedidos;
 	private HttpURLConnection conn;
@@ -62,6 +65,7 @@ public class ListaOfertas extends Activity {
 	// private Configuracion c;
 	private Button proponCamp;
 	private ArrayList<Integer> listaIds = new ArrayList<Integer>();
+	private ArrayList<Integer> propIds = new ArrayList<Integer>();
 	public static final String PREFS_NAME = "MyPrefsFile";
 	private int mes, dia, anno;
 
@@ -93,6 +97,7 @@ public class ListaOfertas extends Activity {
 		modelos = new ArrayList<String>();
 		precios = new ArrayList<Integer>();
 		listaTitulos = new ArrayList<String>();
+		listaTitulos2 = new ArrayList<String>();
 
 		lstPedidos = (ListView) findViewById(R.id.lista);
 		tituloPedidos = (TextView) findViewById(R.id.tituloPedidos);
@@ -241,7 +246,7 @@ public class ListaOfertas extends Activity {
 				titulos = new String[respJSON.length()];
 				// lista = new String[respJSON2.length()];
 
-				for (i = 0; i < respJSON.length(); i++) {
+				for (int i = 0; i < respJSON.length(); i++) {
 					JSONObject obj = respJSON.getJSONObject(i);
 
 					// for (int p = 0; p < respJSON2.length(); p++) {
@@ -271,7 +276,7 @@ public class ListaOfertas extends Activity {
 					// }
 
 					// active = obj.getString("active");
-					id = obj.getString("id");
+					propId = obj.getString("id");
 					// Log.v("ID", id);
 					// listaIds.add(Integer.parseInt(id));
 
@@ -281,6 +286,8 @@ public class ListaOfertas extends Activity {
 					String categoria = obj.getString("main_category");
 					String status = obj.getString("status");
 					String ofertas = obj.getString("bids");
+
+					listaTitulos.add(title);
 
 					JSONArray respJSONBids = obj.getJSONArray("bids");
 
@@ -292,16 +299,31 @@ public class ListaOfertas extends Activity {
 						String modeloOffer = objBids.getString("product_model");
 						String precioOffer = objBids.getString("bid_price");
 						String idOffer = objBids.getString("user_id");
+						String active = objBids.getString("active");
 						// Log.v("Offers2", marcaOffer);
+						String id = objBids.getString("id");
 
 						int aux = Integer.parseInt(precioOffer);
-						// if (aux < precioFin) {
-						if (user_id.equalsIgnoreCase(idOffer)) {
-							listaTitulos.add(title);
-							marcas.add(marcaOffer);
-							modelos.add(modeloOffer);
-							precios.add(Integer.parseInt(precioOffer));
+						// int aux2 = 0;
+						if (user_id.equalsIgnoreCase(idOffer)
+								&& active.equalsIgnoreCase("true")) {
+							Log.v("ENTRO2", "ENTRO2");
 
+//							listaTitulos2.add(title);
+							//
+							// marcas.add(marcaOffer);
+							// modelos.add(modeloOffer);
+							// precios.add(Integer.parseInt(precioOffer));
+							if (!listaIds.contains(Integer.parseInt(id))) {
+								listaIds.add(Integer.parseInt(id));
+								aux2++;
+								 listaTitulos2.add(title);
+
+								marcas.add(marcaOffer);
+								modelos.add(modeloOffer);
+								precios.add(Integer.parseInt(precioOffer));
+								propIds.add(Integer.parseInt(propId));
+							}
 							if (aux < precioFin) {
 								precioFin = aux;
 								idFin = idOffer;
@@ -318,8 +340,25 @@ public class ListaOfertas extends Activity {
 							// marcas.add(marcaOffer);
 							// modelos.add(modeloOffer);
 							// precios.add(Integer.parseInt(precioOffer));
-						}
+							// pedidos = new Pedidos(null, listaTitulos.get(j)
+							// + "\nMarca: " + marcas.get(j) + "\nModelo: "
+							// + modelos.get(j) + "\nPrecio: " + precios.get(i)
+							// + "€" + "\nID: " + listaIds.get(j)
+							// + "\nProposalID: " + propIds.get(j));
+							// arrayPed.add(pedidos);
 
+							Log.v("AUX2", "" + aux2);
+						} else {
+
+							// resul = false;
+
+						}
+						// pedidos = new Pedidos(null, listaTitulos.get(j)
+						// + "\nMarca: " + marcas.get(j) + "\nModelo: "
+						// + modelos.get(j) + "\nPrecio: " + precios.get(i)
+						// + "€" + "\nID: " + listaIds.get(j)
+						// + "\nProposalID: " + propIds.get(j));
+						// arrayPed.add(pedidos);
 					}
 					// Log.v("Offers", ofertas);
 					fechaFin = obj.getString("close_date");
@@ -334,12 +373,13 @@ public class ListaOfertas extends Activity {
 					// + modelos.get(i) + "\nPrecio: " + precios.get(i)
 					// + "€");
 
-					pedidos = new Pedidos(null, listaTitulos.get(i)
-							+ "\nMarca: " + marcas.get(i) + "\nModelo: "
-							+ modelos.get(i) + "\nPrecio: " + precios.get(i)
-							+ "€");
-					arrayPed.add(pedidos);
-					listaIds.add(Integer.parseInt(id));
+					Log.v("JOO", listaIds.toString());
+
+					// Log.v("ÑAÑA", "ELSEELSE");
+
+					Log.v("TITULOS", "" + listaTitulos.get(i));
+					// Log.v("MARCAS", "" + listaIds.get(i));
+					// listaIds.add(Integer.parseInt(id));
 
 					// Log.v("lista" + j, lista[j].toString());
 					// Log.v("ID" + j, id);
@@ -376,8 +416,8 @@ public class ListaOfertas extends Activity {
 					// if (categoria.equalsIgnoreCase("sports") ||
 					// categoria.equalsIgnoreCase("kids")) {
 
-					Log.v("ID Fuera", idFin);
-					Log.v("ID User Fuera", user_id);
+					// Log.v("ID Fuera", idFin);
+					// Log.v("ID User Fuera", user_id);
 
 					// if (Integer.parseInt(annoFin) < anno) {
 					//
@@ -519,30 +559,52 @@ public class ListaOfertas extends Activity {
 					// campañas[i] = " " + marca + " " + modelo + " ";
 					// titulos[i] = " " + title;
 					precioFin = 9999999;
+					// aux2 = 0;
+					Log.v("TITULOS", listaTitulos.toString());
+					Log.v("TITULOS", listaTitulos2.toString());
+					// Log.v("TITULOS2", listaIds.get(i).toString());
 				}
+				for (int j = 0; j < listaIds.size(); j++) {
+					pedidos = new Pedidos(null, listaTitulos2.get(j)
+							+ "\nMarca: " + marcas.get(j) + "\nModelo: "
+							+ modelos.get(j) + "\nPrecio: " + precios.get(j)
+							+ "€" 
+//							+ "\nID: " + listaIds.get(j)
+//							+ "\nProposalID: " + propIds.get(j)
+							);
+					arrayPed.add(pedidos);
+				}
+				lstPedidos.setOnItemClickListener(new OnItemClickListener() {
 
-				// lstPedidos.setOnItemClickListener(new OnItemClickListener() {
-				//
-				// @Override
-				// public void onItemClick(AdapterView<?> parent, View view,
-				// int position, long id) {
-				//
-				// Intent intent = new Intent(ListaPedidos.this,
-				// Activity1.class);
-				// intent.putExtra("id", listaIds.get(position));
-				// intent.putExtra("user_id", user_id);
-				// intent.putExtra("login", login);
-				//
-				// startActivity(intent);
-				//
-				// }
-				// });
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+
+						Intent intent = new Intent(ListaOfertas.this,
+								ModificarOEliminar.class);
+						intent.putExtra("marca", marcas.get(position));
+						intent.putExtra("modelo", modelos.get(position));
+						intent.putExtra("precio", precios.get(position));
+						intent.putExtra("idOffer", listaIds.get(position));
+						intent.putExtra("propId", propIds.get(position));
+						intent.putExtra("user_id", user_id);
+						intent.putExtra("login", login);
+
+						startActivity(intent);
+
+						finish();
+					}
+				});
 
 			} catch (SocketException ex) {
 				Log.e("ServicioRest", "Error!", ex);
 
 				resul = false;
 				finish();
+			} catch (RuntimeException ex) {
+				Log.e("ServicioRest", "Error no tienes ofertas");
+
+				resul = false;
 			} catch (Exception ex) {
 				Log.e("ServicioRest", "Error!", ex);
 
@@ -577,6 +639,14 @@ public class ListaOfertas extends Activity {
 
 					lstPedidos.setAdapter(adapter);
 					pDialog.dismiss();
+				} else {
+
+					Toast t = Toast.makeText(ListaOfertas.this,
+							"No tienes ninguna oferta en activo",
+							Toast.LENGTH_SHORT);
+					t.show();
+
+					finish();
 				}
 			} catch (Exception e) {
 				Log.e("ServicioRest", "Error del PostExecute", e);

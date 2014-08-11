@@ -61,6 +61,7 @@ public class ListaPedidos extends Activity {
 	// private Configuracion c;
 	private Button proponCamp;
 	private ArrayList<Integer> listaIds = new ArrayList<Integer>();
+	private ArrayList<Integer> ids = new ArrayList<Integer>();
 	public static final String PREFS_NAME = "MyPrefsFile";
 	private int mes, dia, anno;
 
@@ -261,16 +262,24 @@ public class ListaPedidos extends Activity {
 						String marcaOffer = objBids.getString("product_brand");
 						String precioOffer = objBids.getString("bid_price");
 						String idOffer = objBids.getString("user_id");
+						String active = objBids.getString("active");
 						Log.v("Offers2", marcaOffer);
-
+						ids.add(Integer.parseInt(idOffer));
 						int aux = Integer.parseInt(precioOffer);
-						if (aux < precioFin) {
-							precioFin = aux;
-							idFin = idOffer;
-							Log.v("ID", idFin);
-							Log.v("ID User", user_id);
+
+						if (active.equalsIgnoreCase("true")) {
+							contOff++;
+							if (aux < precioFin) {
+								precioFin = aux;
+								idFin = idOffer;
+								Log.v("ID", idFin);
+								Log.v("ID User", user_id);
+							}
+						} else {
+							// contOff--;
 						}
-						contOff = j + 1;
+						// Contador de ofertas
+						// contOff = j + 1;
 					}
 					Log.v("Offers", ofertas);
 					fechaFin = obj.getString("close_date");
@@ -320,42 +329,41 @@ public class ListaPedidos extends Activity {
 
 					if (Integer.parseInt(annoFin) < anno) {
 
-						pedidos = new Pedidos(getResources().getDrawable(
-								R.drawable.caducado), title);
-
-						arrayPed.add(pedidos);
-						listaIds.add(Integer.parseInt(id));
+						// pedidos = new Pedidos(getResources().getDrawable(
+						// R.drawable.caducado), title);
+						//
+						// arrayPed.add(pedidos);
+						// listaIds.add(Integer.parseInt(id));
 
 					} else if (Integer.parseInt(annoFin) == anno) {
 
 						if (Integer.parseInt(mesFin) < mes) {
-							pedidos = new Pedidos(getResources().getDrawable(
-									R.drawable.caducado), title);
-
-							arrayPed.add(pedidos);
-							listaIds.add(Integer.parseInt(id));
+							// pedidos = new Pedidos(getResources().getDrawable(
+							// R.drawable.caducado), title);
+							//
+							// arrayPed.add(pedidos);
+							// listaIds.add(Integer.parseInt(id));
 
 						} else if (Integer.parseInt(mesFin) == mes) {
 							if (Integer.parseInt(diaFin) < dia) {
-								pedidos = new Pedidos(getResources()
-										.getDrawable(R.drawable.caducado),
-										title);
-
-								arrayPed.add(pedidos);
-								listaIds.add(Integer.parseInt(id));
+								 pedidos = new Pedidos(getResources()
+								 .getDrawable(R.drawable.caducado),
+								 title);
+								
+								 arrayPed.add(pedidos);
+								 listaIds.add(Integer.parseInt(id));
 
 							} else {
 
-								if (ofertas.equalsIgnoreCase("[]")) {
-									pedidos = new Pedidos(
-											getResources().getDrawable(
-													R.drawable.nuevo),
+								if (ofertas.equalsIgnoreCase("[]")
+										|| contOff == 0) {
+									pedidos = new Pedidos(getResources()
+											.getDrawable(R.drawable.nuevo),
 											title);
 
 									arrayPed.add(pedidos);
 									listaIds.add(Integer.parseInt(id));
 								} else {
-
 									if (idFin.equalsIgnoreCase(user_id)) {
 
 										pedidos = new Pedidos(
@@ -382,11 +390,10 @@ public class ListaPedidos extends Activity {
 							}
 						} else {
 
-							if (ofertas.equalsIgnoreCase("[]")) {
+							if (ofertas.equalsIgnoreCase("[]") || contOff == 0) {
 
 								pedidos = new Pedidos(getResources()
-										.getDrawable(R.drawable.nuevo),
-										title);
+										.getDrawable(R.drawable.nuevo), title);
 
 								arrayPed.add(pedidos);
 								listaIds.add(Integer.parseInt(id));
@@ -417,7 +424,7 @@ public class ListaPedidos extends Activity {
 						}
 
 					} else {
-						if (ofertas.equalsIgnoreCase("[]")) {
+						if (ofertas.equalsIgnoreCase("[]") || contOff == 0) {
 
 							pedidos = new Pedidos(getResources().getDrawable(
 									R.drawable.nuevo), title);
@@ -459,6 +466,7 @@ public class ListaPedidos extends Activity {
 					// campañas[i] = " " + marca + " " + modelo + " ";
 					titulos[i] = " " + title;
 					precioFin = 9999999;
+					contOff = 0;
 				}
 
 				lstPedidos.setOnItemClickListener(new OnItemClickListener() {
@@ -474,7 +482,7 @@ public class ListaPedidos extends Activity {
 						intent.putExtra("login", login);
 
 						startActivity(intent);
-
+						finish();
 					}
 				});
 
@@ -597,7 +605,7 @@ public class ListaPedidos extends Activity {
 				respStr = EntityUtils.toString(resp.getEntity());
 
 				Log.v("BIEN", respStr);
-				//
+
 				// String token = "";
 				// token = respStr.substring(respStr.lastIndexOf(":"),
 				// respStr.length() - 3);

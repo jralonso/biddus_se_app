@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -16,21 +17,26 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,11 +45,12 @@ import android.widget.Toast;
 public class Activity1 extends Activity {
 	private String modelo;
 	private String marca;
+	private ArrayList <Comentarios> comentarios= new ArrayList<Comentarios>();
 	private int id;
 	private String login;
 	private String user_id;
 	// private TextView txt;
-	private Button boton, botonShare;
+	private Button boton, botonShare,botonComentar;
 	private String respStr;
 	private TextView lblResultado;
 	private TextView titulo;
@@ -54,10 +61,14 @@ public class Activity1 extends Activity {
 	private TextView TVprecio;
 	private TextView TVfechaFin;
 	private TextView TXTMarca, TXTModelo, TXTPrecio, TXTFechaFin;
+	private TextView TVPreComent;
+	private TextView TXTComent;
 	private ImageButton imB1, imB2;
 	private Bitmap imagen;
 	private ImageView imagenDetalle;
 	private int mes, dia, anno;
+	private TareaWSComentar comentar;
+	private EditText comentarioEnvio;
 
 	// private Configuracion c;
 
@@ -87,6 +98,7 @@ public class Activity1 extends Activity {
 
 		// txt = (TextView) findViewById(R.id.texto);
 		boton = (Button) findViewById(R.id.botonApuntar);
+		botonComentar = (Button)findViewById(R.id.botonComentar);
 		// botonShare = (Button) findViewById(R.id.botonShare);
 		//
 		//
@@ -167,6 +179,9 @@ public class Activity1 extends Activity {
 		TXTModelo = (TextView) findViewById(R.id.textoModelo);
 		TXTPrecio = (TextView) findViewById(R.id.textoPrecio);
 		TXTFechaFin = (TextView) findViewById(R.id.textoFechaFin);
+		
+		TVPreComent = (TextView)findViewById(R.id.PreComentarios);
+		TXTComent = (TextView)findViewById(R.id.comentarios);
 
 		// lblFechaFin = (TextView) findViewById(R.id.lblfechaFin);
 		// fecha = (TextView) findViewById(R.id.fechaFin);
@@ -214,6 +229,50 @@ public class Activity1 extends Activity {
 			}
 
 		});
+		
+		comentar = new TareaWSComentar();
+		botonComentar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+
+				AlertDialog.Builder adb = new AlertDialog.Builder(Activity1.this);
+				adb.setTitle("Datos");
+				LayoutInflater inflater=Activity1.this.getLayoutInflater();
+				View layout = inflater.inflate(R.layout.dialogo, null);
+				adb.setView(layout);
+				comentarioEnvio=(EditText)layout.findViewById(R.id.envioComentario);
+				adb.setMessage("¿Desea comentar?");
+
+				adb.setIcon(android.R.drawable.ic_menu_compass);
+
+				adb.setPositiveButton("Si",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+								comentar.execute();
+
+								Intent intent = new Intent(Activity1.this,
+										Activity1.class);
+								intent.putExtra("id", id);
+								intent.putExtra("user_id", user_id);
+								intent.putExtra("login", login);
+								startActivity(intent);
+
+								finish();
+							}
+						});
+
+				adb.setNegativeButton("No",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+
+							}
+						});
+				adb.show();
+			}
+		});
 
 	}
 
@@ -256,6 +315,16 @@ public class Activity1 extends Activity {
 			del.setHeader("content-type", "application/json");
 
 			del.addHeader("Authorization", "Token token=\"" + login + "\"");
+			
+			
+			HttpClient httpClient2 = new DefaultHttpClient();
+
+			HttpGet getComent = new HttpGet(
+					"http://demo.biddus.com/api/v1/proposals/" + id+"/comments");
+
+			getComent.setHeader("content-type", "application/json");
+
+			getComent.addHeader("Authorization", "Token token=\"" + login + "\"");
 
 			try {
 				HttpResponse resp = httpClient.execute(del);
@@ -317,8 +386,34 @@ public class Activity1 extends Activity {
 				} else {
 
 				}
+				
+				
+				/*
+				 * A partir de aquí para los comentarios
+				 */
+				HttpResponse respComent = httpClient2.execute(getComent);
+				String respStrComent = EntityUtils.toString(respComent.getEntity());
+				
+				JSONObject objComent = new JSONObject(respStrComent);
+				
+				JSONObject objDataComent = objComent.getJSONObject("data");
+				
+				JSONArray arrayComent = objDataComent.getJSONArray("comments");
+				
+				for (int i = 0; i < arrayComent.length(); i++) {
+					JSONObject obj = arrayComent.getJSONObject(i);
+					Comentarios com = new Comentarios();
+					com.contentComent=obj.getString("content");
+					com.usuarioComent=obj.getString("user_biddus_name");
+					com.id=obj.getString("id");
+					com.idRespuesta=obj.getString("ancestry");
+					comentarios.add(com);
+				}
 
-			} catch (Exception ex) {
+			}  catch (JSONException e) {
+				Log.v("ServicioRest", "No hay comentarios!");
+
+			}catch (Exception ex) {
 				Log.e("ServicioRest", "Error!", ex);
 				ex.printStackTrace();
 				resul = false;
@@ -332,10 +427,12 @@ public class Activity1 extends Activity {
 
 			if (result) {
 				boton.setVisibility(1);
+				botonComentar.setVisibility(1);
 				TXTMarca.setVisibility(1);
 				TXTModelo.setVisibility(1);
 				TXTPrecio.setVisibility(1);
 				TXTFechaFin.setVisibility(1);
+				TVPreComent.setVisibility(1);
 
 				titulo.setText(title + "\n");
 				// titulo.setText(brand + " " + modelo + "\n");
@@ -348,7 +445,41 @@ public class Activity1 extends Activity {
 				TVmodelo.setText("" + modelo);
 				TVprecio.setText("" + precio);
 				TVfechaFin.setText("" + fechaFin);
-
+				String pruebaSt= new String();
+				for(int i=0;i<comentarios.size();i++)
+				{
+					pruebaSt+=comentarios.get(i).usuarioComent+":";
+					pruebaSt+="\n"+comentarios.get(i).contentComent+"\n";
+					for(int j=0;j<comentarios.size();j++)
+					{
+						if(comentarios.get(i).id.equals(comentarios.get(j).idRespuesta))
+						{
+							pruebaSt+="Respuesta a "+comentarios.get(i).usuarioComent+" de "+comentarios.get(j).usuarioComent+":";
+							pruebaSt+=comentarios.get(j).contentComent;
+							for(int w=0;w<comentarios.size();w++)
+							{
+								if(comentarios.get(w).idRespuesta.contains(comentarios.get(j).id))
+								{
+									pruebaSt+="Respuesta a "+comentarios.get(j).usuarioComent+" de "+comentarios.get(w).usuarioComent+":";
+									pruebaSt+=comentarios.get(w).contentComent+"\n";
+									for(int p=0;p<comentarios.size();p++)
+									{
+										if(comentarios.get(p).idRespuesta.contains(comentarios.get(w).id))
+										{
+											pruebaSt+="Respuesta a "+comentarios.get(w).usuarioComent+" de "+comentarios.get(p).usuarioComent+":";
+											pruebaSt+=comentarios.get(p).contentComent+"\n";
+											comentarios.remove(p);
+										}
+									}
+									comentarios.remove(w);
+								}
+							}
+							comentarios.remove(j);
+						}
+						else{}
+					}
+				}
+				TXTComent.setText(""+ pruebaSt);
 				pDialog.dismiss();
 
 			}
@@ -363,7 +494,89 @@ public class Activity1 extends Activity {
 		getMenuInflater().inflate(R.menu.activity1, menu);
 		return true;
 	}
+	
+	private class TareaWSComentar extends AsyncTask<String, Integer, Boolean> {
 
+		private String brand;
+		private String title;
+		private String precio;
+	
+		private String desc;
+		private String fechaFin;
+		ProgressDialog pDialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+			pDialog = new ProgressDialog(Activity1.this);
+			pDialog.setMessage("Enviando comentario...");
+			pDialog.setCancelable(true);
+			pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+			pDialog.show();
+
+		}
+
+		protected Boolean doInBackground(String... params) {
+
+			boolean resul = true;
+
+			// String url =
+			// "http://biddusavatar.s3.amazonaws.com/5bdf1ca694cc9932c273f63a0876ba39a9a32299.png?1402655684";
+			// imagen = descargarImagen(url);
+			// imagen = Bitmap.createScaledBitmap(imagen, 150, 150, true);
+
+			HttpClient httpClient = new DefaultHttpClient();
+
+			HttpPost del = new HttpPost(
+					"http://demo.biddus.com/api/v1/proposals/" + id+"/comments");
+
+			del.setHeader("content-type", "application/json");
+
+			del.addHeader("Authorization", "Token token=\"" + login + "\"");
+			try {
+				JSONObject parentData = new JSONObject();
+				JSONObject dato = new JSONObject();
+
+				dato.put("content", comentarioEnvio.getText());
+				parentData.put("comment", dato);
+
+				StringEntity entity = new StringEntity(parentData.toString());
+				del.setEntity(entity);
+
+				HttpResponse resp = httpClient.execute(del);
+				respStr = EntityUtils.toString(resp.getEntity());
+
+				Log.v("BIEN", respStr);
+
+				if (respStr.contains("error")) {
+
+					Log.v("ERROR", "NUBU");
+					login = "error";
+
+				} else {
+
+					if (!respStr.equals("true"))
+						resul = false;
+				}
+
+			} catch (Exception ex) {
+				Log.e("ServicioRest", "Error!", ex);
+				ex.printStackTrace();
+				resul = false;
+
+			}
+
+			return resul;
+		}
+
+		protected void onPostExecute(Boolean result) {
+				pDialog.dismiss();
+
+			
+
+		}
+	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -435,7 +648,9 @@ public class Activity1 extends Activity {
 	private void onRestartApuntado() {
 		finish();
 	}
-
+	
+	
+	
 	public Bitmap descargarImagen(String imageHttpAddress) {
 		URL imageUrl = null;
 		Bitmap imagen = null;

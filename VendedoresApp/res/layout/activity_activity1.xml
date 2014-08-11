@@ -90,16 +90,43 @@
             android:layout_below="@id/textoPrecio"
             android:layout_marginLeft="150dp"
             android:layout_marginTop="10dp" />
+        <TextView
+            android:id="@+id/PreComentarios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fechaFin"
+            android:layout_marginTop="10dp"
+            android:text="Comentarios: "
+            android:visibility="invisible" 
+            />
+        <TextView
+            android:id="@+id/comentarios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/PreComentarios"
+            android:layout_marginTop="10dp"
+            />
 
         <Button
             android:id="@+id/botonApuntar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textoPrecio"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/comentarios"
+            android:layout_marginTop="40dp"
             android:text="Hacer oferta"
             android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/botonComentar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/comentarios"
+            android:layout_marginTop="40dp"
+            android:text="Comentar"
+            android:visibility="invisible" />
+
     </RelativeLayout>
 
 </ScrollView>

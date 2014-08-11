@@ -31,5 +31,6 @@
 
     <string name="title_activity_perfil">Perfil</string>
     <string name="title_activity_lista_ofertas">ListaOfertas</string>
+    <string name="title_activity_modificar_oferta">ModificarOferta</string>
 
 </resources>
